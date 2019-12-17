@@ -3690,7 +3690,7 @@ void jeita_rule(void)
 		charging_enable = EN_BAT_CHG_EN_COMMAND_TRUE;
 
 		/* reg=1070 */
-		FV_CFG_reg_value = SMBCHG_FLOAT_VOLTAGE_VALUE_4P350;
+		FV_CFG_reg_value = SMBCHG_FLOAT_VOLTAGE_VALUE_4P357;
 
 		/* reg=1061 */
 		FCC_reg_value = SMBCHG_FAST_CHG_CURRENT_VALUE_2000MA;
@@ -3705,12 +3705,11 @@ void jeita_rule(void)
 		charging_enable = EN_BAT_CHG_EN_COMMAND_TRUE;
 
 		/* reg=1070 */
-		FV_CFG_reg_value = SMBCHG_FLOAT_VOLTAGE_VALUE_4P350;
+		FV_CFG_reg_value = SMBCHG_FLOAT_VOLTAGE_VALUE_4P357;
 
 		/* reg=1061 */
        		FCC_reg_value = SMBCHG_FAST_CHG_CURRENT_VALUE_3000MA;
-					
-			
+
 		printk("%s: FCC_reg_value = 0x%x",
 			__func__,FCC_reg_value);
 
