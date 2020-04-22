@@ -1,6 +1,6 @@
 VERSION = 4
 PATCHLEVEL = 4
-SUBLEVEL = 218
+SUBLEVEL = 219
 EXTRAVERSION =
 NAME = Blurry Fish Butt
 
@@ -647,6 +647,12 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
 
+## hide "error: cast to smaller integer type 'eSapStatus' from 'void *' "
+KBUILD_CFLAGS	+= $(call cc-disable-warning, pointer-to-int-cast)
+
+## hide "warning: integer-overflow in expression"
+KBUILD_CFLAGS	+= $(call cc-disable-warning, integer-overflow)
+
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
 else
@@ -663,6 +669,16 @@ endif
 ifdef CONFIG_CC_WERROR
 KBUILD_CFLAGS	+= -Werror
 endif
+
+KBUILD_CFLAGS += $(call cc-ifversion, -gt, 0900, \
+			$(call cc-option, -Wno-psabi) \
+			$(call cc-disable-warning,maybe-uninitialized,) \
+			$(call cc-disable-warning,format,) \
+			$(call cc-disable-warning,array-bounds,) \
+			$(call cc-disable-warning,stringop-overflow,))
+
+KBUILD_CFLAGS += $(call cc-ifversion, -lt, 0409, \
+			$(call cc-disable-warning,maybe-uninitialized,))
 
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
